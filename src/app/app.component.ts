@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Good } from './good/good';
 import { CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
+import { MatDialog } from '@angular/material/dialog';
+import { GoodDialogResult, GoodDialogComponent } from './good-dialog/good-dialog.component';
 
 @Component({
   selector: 'app-root',
@@ -33,6 +35,8 @@ export class AppComponent {
   inWait: Good[] = [];
   done: Good[] = [];
 
+  constructor(private dialog: MatDialog) {}
+
   drop(event: CdkDragDrop<Good[]>): void {
     if (event.previousContainer === event.container) {
       return;
@@ -46,4 +50,17 @@ export class AppComponent {
   }
 
   editGood(list: 'done' | 'todo' | 'inWait' | 'inProgress', good: Good) {}
+
+  newGood(): void {
+    const dialogRef = this.dialog.open(GoodDialogComponent, {
+      width: '270px',
+      data: {
+        good: {},
+      },
+    });
+    dialogRef
+      .afterClosed()
+      .subscribe((result: GoodDialogResult) => this.todo.push(result.good));
+    console.log(this.todo)
+  }
 }

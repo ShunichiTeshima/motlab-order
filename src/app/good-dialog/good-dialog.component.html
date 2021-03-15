@@ -1,0 +1,32 @@
+<mat-form-field>
+  <mat-label>Product</mat-label>
+  <input matInput cdkFocusInitial [(ngModel)]="data.good.product" />
+</mat-form-field>
+
+<mat-form-field>
+  <mat-label>How many?</mat-label>
+  <textarea matInput [(ngModel)]="data.good.order_number"></textarea>
+</mat-form-field>
+
+<mat-form-field>
+  <mat-label>Who?</mat-label>
+  <textarea matInput [(ngModel)]="data.good.request_user"></textarea>
+</mat-form-field>
+
+<mat-form-field>
+  <mat-label>Note</mat-label>
+  <textarea matInput [(ngModel)]="data.good.note"></textarea>
+</mat-form-field>
+
+<div mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="{ good: data.good }">OK</button>
+  <button *ngIf="data.enableDelete" mat-button (click)="cancel()">Cancel</button>
+  <button
+    *ngIf="data.enableDelete"
+    mat-fab
+    color="primary"
+    aria-label="Delete"
+    [mat-dialog-close]="{ good: data.good, delete: true }">
+    <mat-icon>delete</mat-icon>
+  </button>
+</div>

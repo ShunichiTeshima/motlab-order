@@ -2,3 +2,5 @@
   <mat-icon>shopping_cart</mat-icon>
   <span>Motlab 備品・消耗品管理</span>
 </mat-toolbar>
+
+<app-good *ngFor="let good of todo" [good]="good"></app-good>

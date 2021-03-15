@@ -49,7 +49,24 @@ export class AppComponent {
     );
   }
 
-  editGood(list: 'done' | 'todo' | 'inWait' | 'inProgress', good: Good) {}
+  editGood(list: 'done' | 'todo' | 'inWait' | 'inProgress', good: Good) {
+    const dialogRef = this.dialog.open(GoodDialogComponent, {
+      width: '270px',
+      data: {
+        good,
+        enableDelete: true,
+      },
+    });
+    dialogRef.afterClosed().subscribe((result: GoodDialogResult) => {
+      const dataList = this[list];
+      const goodIndex = dataList.indexOf(good);
+      if (result.delete) {
+        dataList.splice(goodIndex, 1);
+      } else {
+        dataList[goodIndex] = good;
+      }
+    });
+  }
 
   newGood(): void {
     const dialogRef = this.dialog.open(GoodDialogComponent, {

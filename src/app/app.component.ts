@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Good } from './good/good';
+import { CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-root',
@@ -28,4 +29,21 @@ export class AppComponent {
       quantity: '500 mL'
     },
   ]
+  inProgress: Good[] = [];
+  inWait: Good[] = [];
+  done: Good[] = [];
+
+  drop(event: CdkDragDrop<Good[]>): void {
+    if (event.previousContainer === event.container) {
+      return;
+    }
+    transferArrayItem(
+      event.previousContainer.data,
+      event.container.data,
+      event.previousIndex,
+      event.currentIndex
+    );
+  }
+
+  editGood(list: 'done' | 'todo' | 'inWait' | 'inProgress', good: Good) {}
 }

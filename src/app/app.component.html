@@ -3,4 +3,66 @@
   <span>Motlab 備品・消耗品管理</span>
 </mat-toolbar>
 
-<app-good *ngFor="let good of todo" [good]="good"></app-good>
+<div class="content-wrapper">
+  <div class="container-wrapper">
+    <div class="container">
+      <h2>発注待ち</h2>
+      <mat-card
+      cdkDropList
+      id="todo"
+      #todoList="cdkDropList"
+      [cdkDropListData]="todo"
+      [cdkDropListConnectedTo]="[doneList, inWaitList, inProgressList]"
+      (cdkDropListDropped)="drop($event)"
+      class="list">
+      <p class="empty-label" *ngIf="todo.length === 0">Empty</p>
+      <app-good (edit)="editGood('todo', $event)" *ngFor="let good of todo" cdkDrag [good]="good"></app-good>
+      </mat-card>
+    </div>
+
+    <div class="container">
+      <h2>発注済み</h2>
+      <mat-card
+      cdkDropList
+      id="inProgress"
+      #inProgressList="cdkDropList"
+      [cdkDropListData]="inProgress"
+      [cdkDropListConnectedTo]="[todoList, inWaitList, doneList]"
+      (cdkDropListDropped)="drop($event)"
+      class="list">
+      <p class="empty-label" *ngIf="inProgress.length === 0">Empty</p>
+      <app-good (edit)="editGood('inProgress', $event)" *ngFor="let good of inProgress" cdkDrag [good]="good"></app-good>
+      </mat-card>
+    </div>
+
+    <div class="container">
+      <h2>検品・薬品登録待ち</h2>
+      <mat-card
+      cdkDropList
+      id="inWait"
+      #inWaitList="cdkDropList"
+      [cdkDropListData]="inWait"
+      [cdkDropListConnectedTo]="[todoList, inProgressList, doneList]"
+      (cdkDropListDropped)="drop($event)"
+      class="list">
+      <p class="empty-label" *ngIf="inWait.length === 0">Empty</p>
+      <app-good (edit)="editGood('inWait', $event)" *ngFor="let good of inWait" cdkDrag [good]="good"></app-good>
+      </mat-card>
+    </div>
+
+    <div class="container">
+      <h2>納品済み</h2>
+      <mat-card
+      cdkDropList
+      id="done"
+      #doneList="cdkDropList"
+      [cdkDropListData]="done"
+      [cdkDropListConnectedTo]="[todoList, inWaitList, inProgressList]"
+      (cdkDropListDropped)="drop($event)"
+      class="list">
+      <p class="empty-label" *ngIf="done.length === 0">Empty</p>
+      <app-good (edit)="editGood('done', $event)" *ngFor="let good of done" cdkDrag [good]="good"></app-good>
+      </mat-card>
+    </div>
+  </div>
+</div>

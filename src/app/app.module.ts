@@ -13,12 +13,19 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { GoodDialogComponent } from './good-dialog/good-dialog.component';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
+import { SearchDialogComponent } from './search-dialog/search-dialog.component';
+import { environment } from 'src/environments/environment';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { OrderDocComponent } from './order-doc/order-doc.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     GoodComponent,
-    GoodDialogComponent
+    GoodDialogComponent,
+    SearchDialogComponent,
+    OrderDocComponent
   ],
   imports: [
     BrowserModule,
@@ -31,6 +38,8 @@ import { FormsModule } from '@angular/forms';
     MatDialogModule,
     MatInputModule,
     FormsModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

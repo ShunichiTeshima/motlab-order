@@ -1,3 +1,29 @@
+<p>Please enter "Company" or "Product" name</p>
+<mat-form-field>
+  <mat-label>Company</mat-label>
+  <input matInput cdkFocusInitial [(ngModel)]="search.company" />
+</mat-form-field>
+
+<mat-form-field>
+  <mat-label>Product</mat-label>
+  <input matInput cdkFocusInitial [(ngModel)]="search.product" />
+</mat-form-field>
+
+<button mat-button (click)="onSearch()">Search</button>
+
+<p>検索結果</p>
+<div *ngIf="search_result.length">
+  <ul class="search_form">
+    <li *ngFor="let searched of search_result">
+      <span class="badge">{{searched.company}}</span> {{searched.product}}
+      <button mat-button (click)="onSelect(searched)">Select</button>
+    </li>
+  </ul>
+</div>
+<div *ngIf="err_message.length">
+  <p>{{err_message}}</p>
+</div>
+
 <mat-form-field>
   <mat-label>Company</mat-label>
   <input matInput cdkFocusInitial [(ngModel)]="data.good.company" />
@@ -33,15 +59,4 @@
   <textarea matInput [(ngModel)]="data.good.note"></textarea>
 </mat-form-field>
 
-<div mat-dialog-actions>
-  <button mat-button [mat-dialog-close]="{ good: data.good }">OK</button>
-  <button *ngIf="data.enableDelete" mat-button (click)="cancel()">Cancel</button>
-  <button
-    *ngIf="data.enableDelete"
-    mat-fab
-    color="primary"
-    aria-label="Delete"
-    [mat-dialog-close]="{ good: data.good, delete: true }">
-    <mat-icon>delete</mat-icon>
-  </button>
-</div>
+<button mat-button [mat-dialog-close]="{ good: data.good }">OK</button>

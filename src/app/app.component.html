@@ -7,6 +7,22 @@
   <button (click)="newGood()" mat-button>
     <mat-icon>add</mat-icon> 新規商品を登録
   </button>
+  <button (click)="previousGood()" mat-button>
+    <mat-icon>search</mat-icon> 過去の記録から登録
+  </button>
+  <button (click)="switchHidden(show)" mat-button>
+    <mat-icon *ngIf="!show">visibility</mat-icon><mat-icon *ngIf="show">visibility_off</mat-icon> 発注係用
+  </button>
+  <div *ngIf="show">
+    <div *ngIf="(todo | async)?.length">
+      <p>下記製品の発注をお願いします．</p>
+      <ul class="order_note">
+        <app-order-doc *ngFor="let good of todo | async" [good]="good"></app-order-doc>
+      </ul>
+      <p>以上．</p>
+    </div>
+  </div>
+
   <div class="container-wrapper">
     <div class="container">
       <h2>発注待ち</h2>
@@ -14,12 +30,12 @@
       cdkDropList
       id="todo"
       #todoList="cdkDropList"
-      [cdkDropListData]="todo"
+      [cdkDropListData]="todo | async"
       [cdkDropListConnectedTo]="[doneList, inWaitList, inProgressList]"
       (cdkDropListDropped)="drop($event)"
       class="list">
-      <p class="empty-label" *ngIf="todo.length === 0">Empty</p>
-      <app-good (edit)="editGood('todo', $event)" *ngFor="let good of todo" cdkDrag [good]="good"></app-good>
+      <p class="empty-label" *ngIf="(todo | async).length === 0">Empty</p>
+      <app-good (edit)="editGood('todo', $event)" *ngFor="let good of todo | async" cdkDrag [good]="good"></app-good>
       </mat-card>
     </div>
 
@@ -29,12 +45,12 @@
       cdkDropList
       id="inProgress"
       #inProgressList="cdkDropList"
-      [cdkDropListData]="inProgress"
+      [cdkDropListData]="inProgress | async"
       [cdkDropListConnectedTo]="[todoList, inWaitList, doneList]"
       (cdkDropListDropped)="drop($event)"
       class="list">
-      <p class="empty-label" *ngIf="inProgress.length === 0">Empty</p>
-      <app-good (edit)="editGood('inProgress', $event)" *ngFor="let good of inProgress" cdkDrag [good]="good"></app-good>
+      <p class="empty-label" *ngIf="(inProgress | async).length === 0">Empty</p>
+      <app-good (edit)="editGood('inProgress', $event)" *ngFor="let good of inProgress | async" cdkDrag [good]="good"></app-good>
       </mat-card>
     </div>
 
@@ -44,12 +60,12 @@
       cdkDropList
       id="inWait"
       #inWaitList="cdkDropList"
-      [cdkDropListData]="inWait"
+      [cdkDropListData]="inWait | async"
       [cdkDropListConnectedTo]="[todoList, inProgressList, doneList]"
       (cdkDropListDropped)="drop($event)"
       class="list">
-      <p class="empty-label" *ngIf="inWait.length === 0">Empty</p>
-      <app-good (edit)="editGood('inWait', $event)" *ngFor="let good of inWait" cdkDrag [good]="good"></app-good>
+      <p class="empty-label" *ngIf="(inWait | async).length === 0">Empty</p>
+      <app-good (edit)="editGood('inWait', $event)" *ngFor="let good of inWait | async" cdkDrag [good]="good"></app-good>
       </mat-card>
     </div>
 
@@ -59,12 +75,12 @@
       cdkDropList
       id="done"
       #doneList="cdkDropList"
-      [cdkDropListData]="done"
+      [cdkDropListData]="done | async"
       [cdkDropListConnectedTo]="[todoList, inWaitList, inProgressList]"
       (cdkDropListDropped)="drop($event)"
       class="list">
-      <p class="empty-label" *ngIf="done.length === 0">Empty</p>
-      <app-good (edit)="editGood('done', $event)" *ngFor="let good of done" cdkDrag [good]="good"></app-good>
+      <p class="empty-label" *ngIf="(done | async).length === 0">Empty</p>
+      <app-good (edit)="editGood('done', $event)" *ngFor="let good of done | async" cdkDrag [good]="good"></app-good>
       </mat-card>
     </div>
   </div>

@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "motlab-order-management": {
+      "hosting": {
+        "motlab-order": [
+          "motlab-order-management"
+        ]
+      }
+    }
+  }
+}

@@ -45,3 +45,7 @@ app-new-task {
 .cdk-drag-placeholder {
   opacity: 0;
 }
+
+.about-app {
+  margin-left: auto;
+}
